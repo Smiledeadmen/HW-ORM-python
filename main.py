@@ -60,11 +60,10 @@ def update_db(data):
 # найти по имени или id издателя вывести магазины где он продается
 def find_shop():
     tmp = input("Введите имя или номер издателя: ")
-    try:
-        int(tmp)
+    if tmp.isdigit() == True:
         for c in session.query(Publisher, Shop).join(Book).join(Stock).join(Shop).filter(Publisher.id == f'{tmp}').all():
             print(*c, sep=' | ')
-    except ValueError:
+    else:
         for c in session.query(Publisher, Shop).join(Book).join(Stock).join(Shop).filter(Publisher.name.ilike(f'%{tmp}%')).all():
             print(*c, sep=' | ')
 
